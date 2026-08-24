@@ -17,6 +17,12 @@ supabase = init_connection()
 # Title
 st.title("Calisthenics Tracker")
 
+# Password
+user_password = st.text_input("Enter Password to Unlock", type="password")
+if user_password != st.secrets["APP_PASSWORD"]:
+    st.warning("Please enter the correct password to access the tracker.")
+    st.stop()
+
 # Button for choosing the exercise type
 exercise_type = st.selectbox("Exercise",
                              ["Handstand Push-ups",
