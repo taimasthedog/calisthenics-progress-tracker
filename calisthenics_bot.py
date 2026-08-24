@@ -15,7 +15,7 @@ supabase = init_connection()
 
 
 # Title
-st.title("Calisthenics Tracker")
+st.title("Progress Tracker")
 
 # Password
 user_password = st.text_input("Enter Password to Unlock", type="password")
