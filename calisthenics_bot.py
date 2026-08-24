@@ -4,8 +4,7 @@ from supabase import create_client, Client
 import pandas as pd
 
 
-# 1. Initialize Supabase Connection
-# Streamlit caches this so it doesn't reconnect on every button click
+# Supabase Connection
 @st.cache_resource
 def init_connection():
     url = st.secrets["SUPABASE_URL"]
