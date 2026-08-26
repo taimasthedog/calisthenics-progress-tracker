@@ -3,7 +3,7 @@ import datetime
 from supabase import create_client, Client
 import pandas as pd
 import matplotlib.pyplot as plt
-st.set_option('deprecation.showPyplotGlobalUse', False)
+
 
 # Supabase Connection
 @st.cache_resource
@@ -78,8 +78,9 @@ df = pd.DataFrame(response.data)
 
 # Is my total reps growing per exercise?
 df = df.sort_values('date', ascending=True)
-plt.plot(df['date'], df['total_reps'], marker='o')
-st.pyplot()
+fig, ax = plt.subplots()
+ax.plot(df['date'], df['total_reps'], marker='o')
+st.pyplot(fig)
 
 # Hide the database ID column for a cleaner UI
 if not df.empty:
