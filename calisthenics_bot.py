@@ -78,6 +78,7 @@ df = pd.DataFrame(response.data)
 # Is my total reps growing per exercise?
 df = df.sort_values('date', ascending=True)
 plt.plot(df['date'], df['total_reps'], marker='o')
+plt.show()
 
 # Hide the database ID column for a cleaner UI
 if not df.empty:
