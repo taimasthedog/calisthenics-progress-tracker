@@ -99,24 +99,28 @@ exercise_statistics = st.selectbox("Choose the exercise to show statistics",
                               "Dips"], key=1)
 
 # Quick Summary
-st.subheader(f"Quick Summary for {exercise_statistics}")
-minimum = df['min'].min()
-maximum = df['max'].max()
-average = sum(df['total_reps']) / sum(df['sets'])
+st.divider()
+st.title(f"Quick Summary for {exercise_statistics}")
+minimum = df.loc[df['exercise'] == exercise_statistics, 'min'].min()
+maximum = df.loc[df['exercise'] == exercise_statistics, 'max'].max()
+average = sum(df.loc[df['exercise'] == exercise_statistics, 'total_reps']) / sum(df.loc[df['exercise'] == exercise_statistics, 'sets'])
+
 st.markdown(f"Minimum: {minimum}")
 st.markdown(f"Maximum: {maximum}")
 st.markdown(f"Average: {average}")
 
-
-# Is my density growing for the exercise?
+# Is my endurance growing for the exercise?
 st.subheader(f"Is my endurance growing for {exercise_statistics}?")
 st.write("Endurance = Total reps / Duration")
 
 try:
-    df = df.sort_values('date', ascending=True)
+    filtered_df = df[df['exercise'] == exercise_statistics]
+    filtered_df = filtered_df.sort_values('date', ascending=True)
     fig, ax = plt.subplots()
-    ax.plot(df['date'], df.loc[df['exercise'] == exercise_statistics, 'density'], marker='o')
+    ax.plot(filtered_df['date'], filtered_df['density'], marker='o')
+
+    plt.xticks(rotation=45)
+    fig.autofmt_xdate()
     st.pyplot(fig)
 except Exception as e:
-    st.error("No data to process.")
-
+    st.error(f"No data to process. Error: {e}")
