@@ -2,7 +2,7 @@ import streamlit as st
 import datetime
 from supabase import create_client, Client
 import pandas as pd
-
+import matplotlib.pyplot as plt
 
 # Supabase Connection
 @st.cache_resource
@@ -74,6 +74,10 @@ st.subheader("Workout History")
 # Read from Supabase (fetching all rows and ordering by date)
 response = supabase.table("workouts").select("*").order("date", desc=True).execute()
 df = pd.DataFrame(response.data)
+
+# Is my total reps growing per exercise?
+df = df.sort_values('date', ascending=True)
+plt.plot(df['date'], df['total_reps'], marker='o')
 
 # Hide the database ID column for a cleaner UI
 if not df.empty:
