@@ -121,7 +121,10 @@ try:
     filtered_df = filtered_df.sort_values('date', ascending=True)
     fig, ax = plt.subplots()
     ax.plot(filtered_df['date'], filtered_df['density'], marker='o')
-
+    ax.set_title(f"{exercise_statistics} Endurance Over Time") # Dynamic title
+    ax.set_xlabel("Time")
+    ax.set_ylabel("Endurance")
+    
     plt.xticks(rotation=45)
     fig.autofmt_xdate()
     st.pyplot(fig)
