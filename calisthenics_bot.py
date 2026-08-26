@@ -3,6 +3,7 @@ import datetime
 from supabase import create_client, Client
 import pandas as pd
 import matplotlib.pyplot as plt
+st.set_option('deprecation.showPyplotGlobalUse', False)
 
 # Supabase Connection
 @st.cache_resource
