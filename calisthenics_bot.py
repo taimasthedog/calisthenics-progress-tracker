@@ -77,6 +77,7 @@ response = supabase.table("workouts").select("*").order("date", desc=True).execu
 df = pd.DataFrame(response.data)
 
 # Is my total reps growing per exercise?
+st.subheader("Is my total reps growing?")
 df = df.sort_values('date', ascending=True)
 fig, ax = plt.subplots()
 ax.plot(df['date'], df['total_reps'], marker='o')
