@@ -27,7 +27,9 @@ exercise_type = st.selectbox("Exercise",
                              ["Handstand Push-ups",
                               "Pull-ups",
                               "Muscle-ups",
-                              "Dips"])
+                              "Dips",
+                              "Pike push-up",
+                              "Australian pull-up"])
 
 # Date button
 workout_date = st.date_input("Date", datetime.date.today())
@@ -96,7 +98,9 @@ exercise_statistics = st.selectbox("Choose the exercise to show statistics",
                              ["Handstand Push-ups",
                               "Pull-ups",
                               "Muscle-ups",
-                              "Dips"], key=1)
+                              "Dips",
+                              "Pike push-up",
+                              "Australian pull-up"], key=1)
 
 # Quick Summary
 try:
@@ -112,7 +116,9 @@ try:
 except Exception as e:
     st.error(f"No data to process. Error: {e}")
 
+
 # Is my endurance growing for the exercise?
+st.divider()
 st.subheader(f"Is my endurance growing for {exercise_statistics}?")
 st.write("Endurance = Total reps / Duration")
 
@@ -121,12 +127,50 @@ try:
     filtered_df = filtered_df.sort_values('date', ascending=True)
     fig, ax = plt.subplots()
     ax.plot(filtered_df['date'], filtered_df['density'], marker='o')
-    ax.set_title(f"{exercise_statistics} Endurance Over Time") # Dynamic title
-    ax.set_xlabel("Time")
-    ax.set_ylabel("Endurance")
-    
+    ax.set_title(f"{exercise_statistics} Density Over Time")  # Dynamic title
+    ax.set_xlabel("Date")
+    ax.set_ylabel("Density")
+
     plt.xticks(rotation=45)
     fig.autofmt_xdate()
     st.pyplot(fig)
 except Exception as e:
     st.error(f"No data to process. Error: {e}")
+
+
+# Is my total reps growing for the exercise?
+st.divider()
+st.subheader(f"Is my total reps growing for {exercise_statistics}?")
+
+try:
+    fig, ax = plt.subplots()
+    ax.plot(filtered_df['date'], filtered_df['total_reps'], marker='o')
+    ax.set_title(f"{exercise_statistics} Total Reps Over Time")  # Dynamic title
+    ax.set_xlabel("Date")
+    ax.set_ylabel("Total reps")
+
+    plt.xticks(rotation=45)
+    fig.autofmt_xdate()
+    st.pyplot(fig)
+except Exception as e:
+    st.error(f"No data to process. Error: {e}")
+
+
+# Is my time to do the same exercise decreasing?
+st.divider()
+st.subheader(f"Is my time to do the {exercise_statistics} decreasing?")
+
+try:
+    fig, ax = plt.subplots()
+    ax.plot(filtered_df['date'], filtered_df['duration'], marker='o')
+    ax.set_title(f"{exercise_statistics} Duration Over Time")  # Dynamic title
+    ax.set_xlabel("Date")
+    ax.set_ylabel("Duration")
+
+    plt.xticks(rotation=45)
+    fig.autofmt_xdate()
+    st.pyplot(fig)
+except Exception as e:
+    st.error(f"No data to process. Error: {e}")
+
+
