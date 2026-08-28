@@ -104,15 +104,15 @@ exercise_statistics = st.selectbox("Choose the exercise to show statistics",
 
 # Quick Summary
 try:
-    st.divider()
-    st.title(f"Quick Summary for {exercise_statistics}")
     minimum = df.loc[df['exercise'] == exercise_statistics, 'min'].min()
     maximum = df.loc[df['exercise'] == exercise_statistics, 'max'].max()
     average = sum(df.loc[df['exercise'] == exercise_statistics, 'total_reps']) / sum(df.loc[df['exercise'] == exercise_statistics, 'sets'])
+    total_sessions = df.loc[df['exercise'] == exercise_statistics, 'date'].nunique()
 
     st.markdown(f"Minimum: {minimum}")
     st.markdown(f"Maximum: {maximum}")
     st.markdown(f"Average: {average}")
+    st.markdown(f"Total Sessions: {total_sessions}")
 except Exception as e:
     st.error(f"No data to process. Error: {e}")
 
