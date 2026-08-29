@@ -2,8 +2,7 @@ import streamlit as st
 import datetime
 from supabase import create_client, Client
 import pandas as pd
-import matplotlib.pyplot as plt
-
+import plotly.express as px
 
 # Supabase Connection
 @st.cache_resource
@@ -102,75 +101,56 @@ exercise_statistics = st.selectbox("Choose the exercise to show statistics",
                               "Pike push-up",
                               "Australian pull-up"], key=1)
 
+# Make a filtered copy of the df
+filtered_df = df[df['exercise'] == exercise_statistics].copy()
+
 # Quick Summary
-try:
-    minimum = df.loc[df['exercise'] == exercise_statistics, 'min'].min()
-    maximum = df.loc[df['exercise'] == exercise_statistics, 'max'].max()
-    average = sum(df.loc[df['exercise'] == exercise_statistics, 'total_reps']) / sum(df.loc[df['exercise'] == exercise_statistics, 'sets'])
-    total_sessions = df.loc[df['exercise'] == exercise_statistics, 'date'].nunique()
+if not filtered_df.empty:
+    col1, col2, col3, col4 = st.columns(4)
 
-    st.markdown(f"Minimum: {minimum}")
-    st.markdown(f"Maximum: {maximum}")
-    st.markdown(f"Average: {average}")
-    st.markdown(f"Total Sessions: {total_sessions}")
-except Exception as e:
-    st.error(f"No data to process. Error: {e}")
+    minimum = filtered_df['min'].min()
+    maximum = filtered_df['max'].max()
+    total_reps_all = filtered_df['total_reps'].sum()
+    total_sets_all = filtered_df['sets'].sum()
+    average = avg_reps = round(total_reps_all / total_sets_all, 1) if total_sets_all > 0 else 0
+    total_sessions = filtered_df['date'].nunique()
 
+    col1.metric("Your minimum:", int(minimum))
+    col2.metric("Your maximum:", int(maximum))
+    col3.metric("Your average:", average)
+    col4.metric("Total sessions done:", total_sessions)
 
-# Is my endurance growing for the exercise?
-st.divider()
-st.subheader(f"Is my endurance growing for {exercise_statistics}?")
-st.write("Endurance = Total reps / Duration")
-
-try:
-    filtered_df = df[df['exercise'] == exercise_statistics]
+    # Visualizations
     filtered_df = filtered_df.sort_values('date', ascending=True)
-    fig, ax = plt.subplots()
-    ax.plot(filtered_df['date'], filtered_df['density'], marker='o')
-    ax.set_title(f"{exercise_statistics} Density Over Time")  # Dynamic title
-    ax.set_xlabel("Date")
-    ax.set_ylabel("Density")
 
-    plt.xticks(rotation=45)
-    fig.autofmt_xdate()
-    st.pyplot(fig)
-except Exception as e:
-    st.error(f"No data to process. Error: {e}")
+    st.divider()
+    st.subheader(f"My endurance growth for {exercise_statistics}")
+    st.caption("Endurance = Total reps / Duration")
+    fig1 = px.line(filtered_df,
+                   x='date',
+                   y='density',
+                   markers=True,
+                   title=f"{exercise_statistics} Density Over Time")
+    st.plotly_chart(fig1, use_container_width=True)
 
+    st.divider()
+    st.subheader(f"My total reps growth for {exercise_statistics}")
+    fig2 = px.line(filtered_df,
+                   x='date',
+                   y='total_reps',
+                   markers=True,
+                   title=f"{exercise_statistics} Total Reps Over Time")
+    st.plotly_chart(fig2, use_container_width=True)
 
-# Is my total reps growing for the exercise?
-st.divider()
-st.subheader(f"My total reps growth for {exercise_statistics}?")
-
-try:
-    fig, ax = plt.subplots()
-    ax.plot(filtered_df['date'], filtered_df['total_reps'], marker='o')
-    ax.set_title(f"{exercise_statistics} Total Reps Over Time")  # Dynamic title
-    ax.set_xlabel("Date")
-    ax.set_ylabel("Total reps")
-
-    plt.xticks(rotation=45)
-    fig.autofmt_xdate()
-    st.pyplot(fig)
-except Exception as e:
-    st.error(f"No data to process. Error: {e}")
-
-
-# Is my time to do the same exercise decreasing?
-st.divider()
-st.subheader(f"Is my time to do the {exercise_statistics} decreasing?")
-
-try:
-    fig, ax = plt.subplots()
-    ax.plot(filtered_df['date'], filtered_df['duration'], marker='o')
-    ax.set_title(f"{exercise_statistics} Duration Over Time")  # Dynamic title
-    ax.set_xlabel("Date")
-    ax.set_ylabel("Duration")
-
-    plt.xticks(rotation=45)
-    fig.autofmt_xdate()
-    st.pyplot(fig)
-except Exception as e:
-    st.error(f"No data to process. Error: {e}")
+    st.divider()
+    st.subheader(f"Time it takes to do {exercise_statistics}")
+    fig3 = px.line(filtered_df,
+                   x='date',
+                   y='duration',
+                   markers=True,
+                   title=f"{exercise_statistics} Duration Over Time")
+    st.plotly_chart(fig3, use_container_width=True)
+else:
+    st.info(f"No data available for {exercise_statistics} yet.")
 
 
