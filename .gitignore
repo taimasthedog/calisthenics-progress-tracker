@@ -1,0 +1,11 @@
+.streamlit/secrets.toml
+venv/
+env/
+.env
+__pycache__/
+*.pyc
+*.db
+*.sqlite3
+practice_calisthenics_data.csv
+.DS_Store
+Thumbs.db
