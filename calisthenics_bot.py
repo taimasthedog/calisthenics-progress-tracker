@@ -27,8 +27,8 @@ exercise_type = st.selectbox("Exercise",
                               "Pull-ups",
                               "Muscle-ups",
                               "Dips",
-                              "Pike push-up",
-                              "Australian pull-up"])
+                              "Pike push-ups",
+                              "Australian pull-ups"])
 
 # Date button
 workout_date = st.date_input("Date", datetime.date.today())
@@ -98,8 +98,8 @@ exercise_statistics = st.selectbox("Choose the exercise to show statistics",
                               "Pull-ups",
                               "Muscle-ups",
                               "Dips",
-                              "Pike push-up",
-                              "Australian pull-up"], key=1)
+                              "Pike push-ups",
+                              "Australian pull-ups"], key=1)
 
 # Make a filtered copy of the df
 filtered_df = df[df['exercise'] == exercise_statistics].copy()
@@ -124,17 +124,14 @@ if not filtered_df.empty:
     filtered_df = filtered_df.sort_values('date', ascending=True)
 
     st.divider()
-    st.subheader(f"My endurance growth for {exercise_statistics}")
-    st.caption("Endurance = Total reps / Duration")
     fig1 = px.line(filtered_df,
                    x='date',
                    y='density',
                    markers=True,
-                   title=f"{exercise_statistics} Density Over Time")
+                   title=f"{exercise_statistics} Endurance Over Time")
     st.plotly_chart(fig1, use_container_width=True)
 
     st.divider()
-    st.subheader(f"My total reps growth for {exercise_statistics}")
     fig2 = px.line(filtered_df,
                    x='date',
                    y='total_reps',
@@ -143,7 +140,6 @@ if not filtered_df.empty:
     st.plotly_chart(fig2, use_container_width=True)
 
     st.divider()
-    st.subheader(f"Time it takes to do {exercise_statistics}")
     fig3 = px.line(filtered_df,
                    x='date',
                    y='duration',
