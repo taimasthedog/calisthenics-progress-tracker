@@ -140,7 +140,7 @@ except Exception as e:
 
 # Is my total reps growing for the exercise?
 st.divider()
-st.subheader(f"Is my total reps growing for {exercise_statistics}?")
+st.subheader(f"My total reps growth for {exercise_statistics}?")
 
 try:
     fig, ax = plt.subplots()
