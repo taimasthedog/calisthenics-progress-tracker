@@ -4,24 +4,24 @@ Simple, easy-to-use progress tracker written in python. Just fill out your data 
 
 
 # How to set it up locally? 
-## 1. Clone this repository and navigate into the project directory:
+## 1. Clone this repository and navigate into the project directory
 
 ```
 git clone https://github.com/taimasthedog/calisthenics-progress-tracker.git
 cd calisthenics-progress-tracker
 ```
 
-## 2. Install the required Python libraries using the 'requirements.txt':
+## 2. Install the required Python libraries
 
 ```
 pip install -r requirements.txt
 ```
 
-## 3. Set Up the Database. 
+## 3. Set Up the Database
 This app uses Supabase for cloud data storage. You can use Google Sheets, Firebase (I haven't tried them).
 
-   1) Create a new project in Supabase.
-   2) Navigate to the SQL Editor in your Supabase dashboard.
+   1) Create a new project in Supabase
+   2) Navigate to the SQL Editor in your Supabase dashboard
    3) Run the following SQL command to create the required table:
 
 ```
@@ -41,11 +41,11 @@ CREATE TABLE workouts (
 
 ## 4. Configure Secure Environment Variables
 
-1) Inside the project folder, create a hidden directory named '.streamlit'.
-2) Inside that directory, create a file named 'secrets.toml'.
+1) Inside the project folder, create a hidden directory named ```.streamlit```.
+2) Inside that directory, create a file named ```secrets.toml```.
 3) Add your Supabase credentials and a custom app password:
   
-Inside the 'secrets.toml' copy-paste this and fill out your Supabase URL, key, and set your own password:
+Inside the ```secrets.toml``` copy-paste this and fill out your Supabase URL, key, and set your own password:
 
 ```
 SUPABASE_URL = "https://your-project-url.supabase.co"
