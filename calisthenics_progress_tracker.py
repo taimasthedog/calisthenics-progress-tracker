@@ -117,10 +117,22 @@ if not filtered_df.empty:
     average = avg_reps = round(total_reps_all / total_sets_all, 1) if total_sets_all > 0 else 0
     total_sessions = filtered_df['date'].nunique()
 
+    # Calculate average rest days
+    df['date'] = pd.to_datetime(df['date'])
+    unique_dates = df['date'].drop_duplicates().sort_values()
+    rest_days = unique_dates.diff().dt.days
+    average_rest = rest_days.dropna().mean()
+
+    if pd.isna(average_rest):
+        display_rest = "Need more data"
+    else:
+        display_rest = f"{round(average_rest, 1)} days"
+
     col1.metric("Your minimum:", int(minimum))
     col2.metric("Your maximum:", int(maximum))
     col3.metric("Your average:", average)
     col4.metric("Total sessions done:", total_sessions)
+    st.metric("Avg rest time", display_rest)
 
     # Visualizations
     filtered_df = filtered_df.sort_values('date', ascending=True)
