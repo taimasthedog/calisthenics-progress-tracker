@@ -146,7 +146,7 @@ if not filtered_df.empty:
                    x='date',
                    y='mean',
                    markers=True,
-                   title=f"{exercise_statistics} Endurance Over Time")
+                   title=f"{exercise_statistics} Average Reps Over Time")
     st.plotly_chart(fig1, use_container_width=True)
 
     st.divider()
