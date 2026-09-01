@@ -120,6 +120,7 @@ exercise_statistics = st.selectbox("Choose the exercise to show statistics",
 
 # Make a filtered copy of the df
 filtered_df = df[df['exercise'] == exercise_statistics].copy()
+filtered_df['mean'] = filtered_df['total_reps'] / filtered_df['sets']
 
 # Quick Summary
 if not filtered_df.empty:
@@ -139,6 +140,14 @@ if not filtered_df.empty:
 
     # Visualizations
     filtered_df = filtered_df.sort_values('date', ascending=True)
+
+    st.divider()
+    fig1 = px.line(filtered_df,
+                   x='date',
+                   y='mean',
+                   markers=True,
+                   title=f"{exercise_statistics} Endurance Over Time")
+    st.plotly_chart(fig1, use_container_width=True)
 
     st.divider()
     fig1 = px.line(filtered_df,
