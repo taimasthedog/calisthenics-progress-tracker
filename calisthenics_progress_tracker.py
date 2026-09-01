@@ -146,7 +146,7 @@ if not filtered_df.empty:
                    x='date',
                    y='mean',
                    markers=True,
-                   title=f"{exercise_statistics} Average Reps Over Time")
+                   title="Average Reps Over Time")
     st.plotly_chart(fig1, use_container_width=True)
 
     st.divider()
@@ -154,7 +154,7 @@ if not filtered_df.empty:
                    x='date',
                    y='density',
                    markers=True,
-                   title=f"{exercise_statistics} Endurance Over Time")
+                   title="Endurance Over Time")
     st.plotly_chart(fig1, use_container_width=True)
 
     st.divider()
@@ -162,7 +162,7 @@ if not filtered_df.empty:
                    x='date',
                    y='total_reps',
                    markers=True,
-                   title=f"{exercise_statistics} Total Reps Over Time")
+                   title="Total Reps per Session Over Time")
     st.plotly_chart(fig2, use_container_width=True)
 
     st.divider()
@@ -170,7 +170,7 @@ if not filtered_df.empty:
                    x='date',
                    y='duration',
                    markers=True,
-                   title=f"{exercise_statistics} Duration Over Time")
+                   title="Duration of the Sessions Over Time")
     st.plotly_chart(fig3, use_container_width=True)
 else:
     st.info(f"No data available for {exercise_statistics} yet.")
