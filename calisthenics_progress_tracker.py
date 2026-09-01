@@ -29,7 +29,8 @@ exercise_type = st.selectbox("Exercise",
                               "Dips",
                               "Pike push-ups",
                               "Australian pull-ups",
-                              "Push-ups"])
+                              "Push-ups",
+                              "Negative Pull-ups"])
 
 # Date button
 workout_date = st.date_input("Date", datetime.date.today())
@@ -114,7 +115,8 @@ exercise_statistics = st.selectbox("Choose the exercise to show statistics",
                               "Dips",
                               "Pike push-ups",
                               "Australian pull-ups",
-                              "Push-ups"], key=1)
+                              "Push-ups",
+                              "Negative Pull-ups"], key=1)
 
 # Make a filtered copy of the df
 filtered_df = df[df['exercise'] == exercise_statistics].copy()
