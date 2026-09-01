@@ -162,7 +162,7 @@ if not filtered_df.empty:
                    x='date',
                    y='total_reps',
                    markers=True,
-                   title="Total Reps per Session Over Time")
+                   title="Total Reps Over Time")
     st.plotly_chart(fig2, use_container_width=True)
 
     st.divider()
